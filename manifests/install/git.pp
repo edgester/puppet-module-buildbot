@@ -12,7 +12,6 @@ class buildbot::install::git( $directory='/home/buildmaster/buildbot-src',
       $source='git://github.com/buildbot/buildbot.git',
       $revision='master' ) {
   include buildbot::base
-  include vcsrepo
 
   vcsrepo { $directory:
     ensure   => present,
