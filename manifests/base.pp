@@ -14,4 +14,10 @@ class buildbot::base {
     ensure => present,
     name   => $buildbot::params::package_deps,
   }
+
+  buildbot::user_homedir { "buildbot":
+    group    => "buildbot",
+    fullname => "buildbot shared user",
+    ingroups => [],
+  }
 }

@@ -10,7 +10,7 @@ class buildbot::master {
   include buildbot::base
 
   buildbot::user_homedir { "buildmaster":
-    group    => "buildmaster",
+    group    => "buildbot",
     fullname => "buildbot master",
     ingroups => [],
   }

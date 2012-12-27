@@ -7,8 +7,9 @@
 # Copyright 2012 Jason Edgecombe, unless otherwise noted.
 #
 #
-class buildbot::install::git( $directory='/home/buildmaster/buildbot-src',
-      $owner='buildmaster',
+class buildbot::install::git( $directory='/usr/local/buildbot-src',
+      $owner='buildbot',
+      $group='buildbot',
       $source='git://github.com/buildbot/buildbot.git',
       $revision='master' ) {
   include buildbot::base
@@ -21,6 +22,7 @@ class buildbot::install::git( $directory='/home/buildmaster/buildbot-src',
     source   => $source,
     revision => $revision,
     owner    => $owner,
+    group    => $group,
     require  => Class['buildbot::base']
   }
 

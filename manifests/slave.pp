@@ -10,7 +10,7 @@ class buildbot::slave {
   include buildbot::base
  
   buildbot::user_homedir { "buildslave":
-    group    => "buildslave",
+    group    => "buildbot",
     fullname => "buildbot slave",
     ingroups => [],
   }
