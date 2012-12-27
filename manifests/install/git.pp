@@ -19,6 +19,7 @@ class buildbot::install::git( $directory='/home/buildmaster/buildbot-src',
     source   => $source,
     revision => $revision,
     owner    => $owner,
+    require  => Class['buildbot::base']
   }
 
 }

@@ -8,5 +8,10 @@
 #
 class buildbot::base {
   include apt
-  apt::builddep { "buildbot": }
+  include buildbot::params
+  
+  package { 'buildbot' :
+    ensure => present,
+    name   => $buildbot::params::package_deps,
+  }
 }
