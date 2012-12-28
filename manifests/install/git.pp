@@ -14,7 +14,7 @@ class buildbot::install::git( $directory='/usr/local/buildbot-src',
       $revision='master' ) {
   include buildbot::base
 
-  $install_command="python setup.py build ; python setup.py install --prefix=/usr"
+  $install_command="python setup.py build && python setup.py install --install-layout=deb"
 
   vcsrepo { $directory:
     ensure   => present,
