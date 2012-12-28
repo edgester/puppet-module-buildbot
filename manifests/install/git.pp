@@ -14,8 +14,8 @@ class buildbot::install::git( $directory='/usr/local/buildbot-src',
       $revision='master' ) {
   include buildbot::base
 
-  $install_command="python setup.py build ; python setup.py install"
-        
+  $install_command="python setup.py build ; python setup.py install --prefix=/usr"
+
   vcsrepo { $directory:
     ensure   => present,
     provider => git,
@@ -28,7 +28,7 @@ class buildbot::install::git( $directory='/usr/local/buildbot-src',
 
   exec { $install_command: 
     cwd     => "$directory/master",
-    path    => ["/usr/bin", "/usr/sbin"],
+    path    => ['/usr/local/bin', '/usr/bin','/bin'],
     creates => '/usr/bin/buildbot',
     require => Vcsrepo[$directory],
   }

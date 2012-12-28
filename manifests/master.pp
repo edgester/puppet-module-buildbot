@@ -22,7 +22,7 @@ class buildbot::master( $user="buildmaster", $group="buildbot", $project_dir ) {
   }
   
   exec { "buildbot create-master $project_dir":
-    path    => ['/usr/bin','/bin'],
+    path    => ['/usr/local/bin','/usr/bin','/bin'],
     creates => "$project_dir/buildbot.tac",
     user    => $user,
     group   => $group,
