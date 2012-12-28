@@ -27,7 +27,7 @@ class buildbot::install::git( $directory='/usr/local/buildbot-src',
   }
 
   exec { $install_command: 
-    cwd     => $directory,
+    cwd     => "$directory/master",
     path    => ["/usr/bin", "/usr/sbin"],
     creates => '/usr/bin/buildbot',
     require => Vcsrepo[$directory],

@@ -6,12 +6,26 @@
 #
 # Copyright 2012 Jason Edgecombe, unless otherwise noted.
 #
-class buildbot::slave {
+class buildbot::slave( $user="buildslave", $group="buildbot", $project_dir, $master_host_port, $slave_name, $slave_password ) {
   include buildbot::base
- 
-  buildbot::user_homedir { "buildslave":
-    group    => "buildbot",
+
+  buildbot::user_homedir { $user:
+    group    => $group,
     fullname => "buildbot slave",
     ingroups => [],
+  }
+
+  file { $project_dir :
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+  }
+  
+  exec { "buildbot create-slave $project_dir $master_host_port $slave_name $slave_password":
+    path    => ['/usr/bin','/bin'],
+    creates => "$project_dir/buildbot.tac",
+    user    => $user,
+    group   => $group,
+    require => [ Class['buildbot::install::git'], File[$project_dir] ],
   }
 }
