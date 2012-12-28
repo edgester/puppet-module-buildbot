@@ -18,7 +18,6 @@ class buildbot::params {
                         'python-twisted-core', 'python-twisted-mail',
                         'python-twisted-web', 'python-twisted-words',
                         'sqlite3', 'texinfo' ]
-      # python-json, python-jinja, git, and cvs are non-core deps
     }
     default: {
       fail("The ${module_name} module is not supported on ${::osfamily} based systems")

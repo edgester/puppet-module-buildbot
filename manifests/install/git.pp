@@ -26,10 +26,19 @@ class buildbot::install::git( $directory='/usr/local/buildbot-src',
     require  => Class['buildbot::base']
   }
 
-  exec { $install_command: 
+  exec { 'buildmaster_install':
+    command => $install_command,
     cwd     => "$directory/master",
     path    => ['/usr/local/bin', '/usr/bin','/bin'],
     creates => '/usr/bin/buildbot',
+    require => Vcsrepo[$directory],
+  }
+
+  exec { 'buildslave_install':
+    command => $install_command,
+    cwd     => "$directory/slave",
+    path    => ['/usr/local/bin', '/usr/bin','/bin'],
+    creates => '/usr/bin/buildslave',
     require => Vcsrepo[$directory],
   }
 }
