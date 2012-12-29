@@ -21,7 +21,7 @@ class buildbot::master( $user="buildmaster", $group="buildbot", $project_dir ) {
     group  => $group,
   }
   
-  exec { "buildbot create-master $project_dir ; buildbot upgrade-master $project_dir":
+  exec { "buildbot create-master $project_dir":
     path    => ['/usr/local/bin','/usr/bin','/bin'],
     creates => "$project_dir/buildbot.tac",
     user    => $user,
