@@ -1,0 +1,13 @@
+Hostname:      <%= @hostname               %>
+Processor:     <%= @processor0             %>
+Proc. Cores:   <%= @physicalprocessorcount %>
+Proc. Threads: <%= @processorcount         %>
+Memory:        <%= @memorytotal            %>
+Platform:      <%= @hardwaremodel          %>
+Architecture:  <%= @architecture           %>
+Hardware:      <%= @productname            %>
+OS:            <%= @operatingsystem %> <%= @operatingsystemrelease %>
+Kernel:        <%= @kernel %> <%= @kernelrelease %>
+Virtual:       <% if is_virtual == "true" -%>Yes (<%= @virtual %>)<% else -%>
+No
+<% end %>
