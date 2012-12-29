@@ -8,7 +8,8 @@
 #
 class buildbot::slave( $user="buildslave", $group="buildbot", $project_dir,
                        $master_host_port, $slave_name, $slave_password,
-                       $info_source='', $info_template='' ) {
+                       $info_source='', $info_template='',
+                       $admin_contact='Your Name Here <admin@youraddress.invalid>' ) {
   include buildbot::base
 
   $slave_install_command = "buildslave create-slave $project_dir $master_host_port $slave_name $slave_password"
@@ -54,6 +55,15 @@ class buildbot::slave( $user="buildslave", $group="buildbot", $project_dir,
     mode    => 0644,
     content => $slave_info_template,
     source  => $slave_info_source,
+    require => Exec[$slave_install_command],
+  }
+
+  # put the slave admin file into place
+  file { "$project_dir/info/admin":
+    owner   => $user,
+    group   => $group,
+    mode    => 0644,
+    content => $admin_contact,
     require => Exec[$slave_install_command],
   }
 }
