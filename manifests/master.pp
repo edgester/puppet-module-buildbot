@@ -6,7 +6,7 @@
 #
 # Copyright 2012 Jason Edgecombe, unless otherwise noted.
 #
-class buildbot::master( $user="buildmaster", $group="buildbot", $project_dir ) {
+class buildbot::master( $user="buildmaster", $group="buildbot", $config, $project_dir ) {
   include buildbot::base
 
   buildbot::user_homedir { $user:
@@ -27,5 +27,14 @@ class buildbot::master( $user="buildmaster", $group="buildbot", $project_dir ) {
     user    => $user,
     group   => $group,
     require => [ Class['buildbot::install::git'], File[$project_dir] ],
+  }
+
+  file { 'master_config':
+    path    => "$project_dir/master.cfg",
+    source  => $config,
+    owner   => $user,
+    group   => $group,
+    mode    => 0600,
+    require => File[$project_dir],
   }
 }
