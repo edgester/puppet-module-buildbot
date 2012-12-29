@@ -13,7 +13,7 @@ class buildbot::params {
       $package_deps = [ 'adduser', 'build-essential', 'cvs', 'debhelper',
                         'dpkg', 'git-core', 'python', 'python-central',
                         'python-dateutil', 'python-jinja2', 'python-simplejson',
-                        'python-migrate', 'python-pip', 'python-sqlalchemy',
+                        'python-migrate', 'python-pip',
                         'python-pysqlite2', 'python-twisted',
                         'python-twisted-core', 'python-twisted-mail',
                         'python-twisted-web', 'python-twisted-words',
