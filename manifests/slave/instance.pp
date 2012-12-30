@@ -13,7 +13,7 @@ define buildbot::slave::instance( $user="buildslave", $group="buildbot",
                        $admin_contact='Your Name Here <admin@youraddress.invalid>' ) {
   include buildbot::base
 
-  $path                  = ['/usr/local/bin','/usr/bin','/bin']
+  # configuration
   $config_files          = ["$project_dir/info/admin","$project_dir/info/host"]
 
   # commands to work with the buildslave
@@ -21,6 +21,20 @@ define buildbot::slave::instance( $user="buildslave", $group="buildbot",
   $slave_start_command   = "buildslave start $project_dir"
   $slave_restart_command = "buildslave restart $project_dir"
   $slave_status_command  = "/bin/kill -0 `/bin/cat $project_dir/twistd.pid`"
+
+  # resource defaults
+  File {
+    owner => $user,
+    group => $group,
+    mode  => 0600,
+  }
+
+  Exec {
+    path  => ['/usr/local/bin','/usr/bin','/bin'],
+    cwd   => $project_dir,
+    user  => $user,
+    group => $group,
+  }
 
   # Fail gracefully if user tries to supply both source and template
   if $info_template and $info_source {
@@ -44,23 +58,17 @@ define buildbot::slave::instance( $user="buildslave", $group="buildbot",
 
   file { $project_dir :
     ensure => directory,
-    owner  => $user,
-    group  => $group,
+    mode  => 0700,
   }
 
   exec { $slave_install_command:
     path    => $path,
     creates => "$project_dir/buildbot.tac",
-    user    => $user,
-    group   => $group,
     require => [ Class['buildbot::install::git'], File[$project_dir] ],
   }
 
   # put the slave info file into place
   file { "$project_dir/info/host":
-    owner   => $user,
-    group   => $group,
-    mode    => 0644,
     content => $slave_info_template,
     source  => $slave_info_source,
     require => Exec[$slave_install_command],
@@ -68,29 +76,18 @@ define buildbot::slave::instance( $user="buildslave", $group="buildbot",
 
   # put the slave admin file into place
   file { "$project_dir/info/admin":
-    owner   => $user,
-    group   => $group,
-    mode    => 0644,
     content => $admin_contact,
     require => Exec[$slave_install_command],
   }
 
   # start the build slave and restart if it isn't running
   exec { $slave_start_command:
-    cwd       => $project_dir,
-    path      => $path,
-    user      => $user,
-    group     => $group,
     unless    => $slave_status_command,
     require   => File[$config_files],
   }
 
   # restart the build slave if files are changed
   exec { $slave_restart_command:
-    cwd       => $project_dir,
-    path      => $path,
-    user      => $user,
-    group     => $group,
     require   => File[$config_files],
     subscribe => File[$config_files],
   }
