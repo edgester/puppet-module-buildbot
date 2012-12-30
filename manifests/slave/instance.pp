@@ -85,7 +85,9 @@ define buildbot::slave::instance( $user="buildslave", $group="buildbot",
   # start the build slave and restart if it isn't running
   exec { $slave_start_command:
     unless    => $slave_status_command,
-    require   => File[$config_files],
+    require     => [ File[$config_files],
+                     Exec[$slave_install_command],
+                     Class['buildbot::master_slave_barrier'] ],
   }
 
   # restart the build slave if files are changed

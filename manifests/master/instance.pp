@@ -60,7 +60,7 @@ define buildbot::master::instance( $user="buildmaster", $group="buildbot",
   exec { $master_start_command:
     unless    => $master_status_command,
     require   => [ File[$config_files],
-                   Class['buildbot::master_slave_barrier'] ],
+                   Exec[$master_install_command] ],
   }
 
   # restart the build master if files are changed
