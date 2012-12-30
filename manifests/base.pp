@@ -16,8 +16,8 @@ class buildbot::base {
   }
 
   package { 'python_sqlalchemy_migrate' :
-    name     => 'sqlalchemy-migrate==0.7.1',
-    ensure   => present,
+    name     => 'sqlalchemy-migrate',
+    ensure   => '0.7.1',
     provider => pip,
     require  => Package['buildbot'],
   }
