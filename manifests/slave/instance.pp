@@ -91,7 +91,7 @@ define buildbot::slave::instance( $user="buildslave", $group="buildbot",
   # restart the build slave if files are changed
   exec { $slave_restart_command:
     refreshonly => true,
-    require     => File[$config_files],
+    require     => [ File[$config_files], Exec[$slave_install_command] ],
     subscribe   => File[$config_files],
   }
 
