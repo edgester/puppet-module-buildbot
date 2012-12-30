@@ -82,7 +82,15 @@ define buildbot::slave::instance( $user="buildslave", $group="buildbot",
     user      => $user,
     group     => $group,
     unless    => $slave_status_command,
-    refresh   => $slave_restart_command,
+    require   => File[$config_files],
+  }
+
+  # restart the build slave if files are changed
+  exec { $slave_restart_command:
+    cwd       => $project_dir,
+    path      => $path,
+    user      => $user,
+    group     => $group,
     require   => File[$config_files],
     subscribe => File[$config_files],
   }
