@@ -9,6 +9,7 @@
 define buildbot::master::instance( $user="buildmaster", $group="buildbot",
                                    $config, $project_dir ) {
   include buildbot::base
+  include buildbot::master_slave_barrier
 
   # configuration
   $config_files          = ['master_config']
@@ -58,7 +59,8 @@ define buildbot::master::instance( $user="buildmaster", $group="buildbot",
   # start the build master and restart if it isn't running
   exec { $master_start_command:
     unless    => $master_status_command,
-    require   => File[$config_files],
+    require   => [ File[$config_files],
+                   Class['buildbot::master_slave_barrier'] ],
   }
 
   # restart the build master if files are changed

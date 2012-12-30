@@ -12,6 +12,7 @@ define buildbot::slave::instance( $user="buildslave", $group="buildbot",
                        $info_source='', $info_template='',
                        $admin_contact='Your Name Here <admin@youraddress.invalid>' ) {
   include buildbot::base
+  include buildbot::master_slave_barrier
 
   # configuration
   $config_files          = ["$project_dir/info/admin","$project_dir/info/host"]
@@ -77,7 +78,8 @@ define buildbot::slave::instance( $user="buildslave", $group="buildbot",
   # put the slave admin file into place
   file { "$project_dir/info/admin":
     content => $admin_contact,
-    require => Exec[$slave_install_command],
+    require => [ Exec[$slave_install_command],
+                 Class['buildbot::master_slave_barrier'] ]
   }
 
   # start the build slave and restart if it isn't running
