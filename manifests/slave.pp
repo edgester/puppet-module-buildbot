@@ -12,7 +12,14 @@ class buildbot::slave( $user="buildslave", $group="buildbot", $project_dir,
                        $admin_contact='Your Name Here <admin@youraddress.invalid>' ) {
   include buildbot::base
 
+  $path                  = ['/usr/local/bin','/usr/bin','/bin']
+  $config_files          = ["$project_dir/info/admin","$project_dir/info/host"]
+
+  # commands to work with the buildslave
   $slave_install_command = "buildslave create-slave $project_dir $master_host_port $slave_name $slave_password"
+  $slave_start_command   = "buildslave start $project_dir"
+  $slave_restart_command = "buildslave restart $project_dir"
+  $slave_status_command  = "/bin/kill -0 `/bin/cat $project_dir/twistd.pid`"
 
   # Fail gracefully if user tries to supply both source and template
   if $info_template and $info_source {
@@ -41,7 +48,7 @@ class buildbot::slave( $user="buildslave", $group="buildbot", $project_dir,
   }
 
   exec { $slave_install_command:
-    path    => ['/usr/local/bin','/usr/bin','/bin'],
+    path    => $path,
     creates => "$project_dir/buildbot.tac",
     user    => $user,
     group   => $group,
@@ -65,5 +72,17 @@ class buildbot::slave( $user="buildslave", $group="buildbot", $project_dir,
     mode    => 0644,
     content => $admin_contact,
     require => Exec[$slave_install_command],
+  }
+
+  # start the build slave and restart if it isn't running
+  exec { $slave_start_command:
+    cwd       => $project_dir,
+    path      => $path,
+    user      => $user,
+    group     => $group,
+    unless    => $slave_status_command,
+    refresh   => $slave_restart_command,
+    require   => File[$config_files],
+    subscribe => File[$config_files],
   }
 }
