@@ -19,7 +19,7 @@ define buildbot::slave::instance( $user="buildslave", $group="buildbot",
 
   # commands to work with the buildslave
   $slave_install_command = "buildslave create-slave $project_dir $master_host_port $slave_name $slave_password"
-  $slave_start_command   = "buildslave start $project_dir"
+  $slave_start_command   = "buildslave start --quiet $project_dir"
   $slave_restart_command = "buildslave restart $project_dir"
   $slave_status_command  = "/bin/kill -0 `/bin/cat $project_dir/twistd.pid`"
 
