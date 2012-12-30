@@ -18,6 +18,12 @@ class buildbot::params {
                         'python-twisted-core', 'python-twisted-mail',
                         'python-twisted-web', 'python-twisted-words',
                         'sqlite3', 'texinfo' ]
+
+      # list of packages to be installed via pip
+      # ensure may be 'installed', 'latest', or a specific version
+      $pip_packages = {
+        'sqlalchemy-migrate' => { 'ensure' => '0.7.1' },
+      }
     }
     default: {
       fail("The ${module_name} module is not supported on ${::osfamily} based systems")

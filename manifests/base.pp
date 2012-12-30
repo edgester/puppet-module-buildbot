@@ -15,12 +15,9 @@ class buildbot::base {
     name   => $buildbot::params::package_deps,
   }
 
-  package { 'python_sqlalchemy_migrate' :
-    name     => 'sqlalchemy-migrate',
-    ensure   => '0.7.1',
-    provider => pip,
-    require  => Package['buildbot'],
-  }
+  $pip_defaults = { 'provider' => 'pip', 'require' => Package['buildbot'] }
+  create_resources(package, $buildbot::params::pip_packages,
+      $pip_defaults )
 
   buildbot::user_homedir { "buildbot":
     group    => "buildbot",
