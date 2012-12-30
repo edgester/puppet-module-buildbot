@@ -85,4 +85,11 @@ class buildbot::slave( $user="buildslave", $group="buildbot", $project_dir,
     require   => File[$config_files],
     subscribe => File[$config_files],
   }
+
+  # start the buildslave at boot-time via cron
+  cron {"buildslave_$project_dir":
+    user    => $user,
+    command => $slave_start_command,
+    special => 'reboot',
+  }
 }
