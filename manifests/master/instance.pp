@@ -17,7 +17,7 @@ define buildbot::master::instance( $user="buildmaster", $group="buildbot",
   # commands to work with the buildbot master
   $master_install_command = "buildbot create-master $project_dir"
   $master_start_command   = "buildbot start --quiet $project_dir"
-  $master_restart_command = "buildbot restart $project_dir"
+  $master_restart_command = "buildbot restart --quiet $project_dir"
   $master_status_command  = "/bin/kill -0 `/bin/cat $project_dir/twistd.pid`"
 
   # resource defaults
