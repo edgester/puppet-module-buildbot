@@ -65,8 +65,9 @@ define buildbot::master::instance( $user="buildmaster", $group="buildbot",
 
   # restart the build master if files are changed
   exec { $master_restart_command:
-    require   => File[$config_files],
-    subscribe => File[$config_files],
+    refreshonly => true,
+    require     => File[$config_files],
+    subscribe   => File[$config_files],
   }
 
   # start the buildmaster at boot-time via cron
