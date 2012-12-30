@@ -1,6 +1,14 @@
 buildbot
 
-This is the buildbot module for puppet.
+This is the buildbot module for puppet. It installs buildbot from the
+buildbot git repo on github.com.
+
+The module was developed on Debian 6.0.5. It's been tested on Debian 6.0.5.
+
+Initial development was targetted towards use with Vagrant
+<http://vagrantup.com>
+
+Patches and pull requests are welcome.
 
 License
 -------
