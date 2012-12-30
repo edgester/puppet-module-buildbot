@@ -1,10 +1,10 @@
 buildbot
 
-This is the buildbot module.
+This is the buildbot module for puppet.
 
 License
 -------
-BSD
+2-clause BSD
 
 Contact
 -------
@@ -13,4 +13,4 @@ Jason Edgecombe : jason at rampaginggeek dot net
 Support
 -------
 
-Please log tickets and issues at our [Projects site](http://projects.example.com)
+Please log tickets and issues at our [Projects site](http://github.com/edgester/puppet-buildbot
