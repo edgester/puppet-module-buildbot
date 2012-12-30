@@ -6,8 +6,9 @@
 #
 # Copyright 2012 Jason Edgecombe, unless otherwise noted.
 #
-class buildbot::slave( $user="buildslave", $group="buildbot", $project_dir,
-                       $master_host_port, $slave_name, $slave_password,
+define buildbot::slave::instance( $user="buildslave", $group="buildbot",
+                       $project_dir, $master_host_port,
+                       $slave_name, $slave_password,
                        $info_source='', $info_template='',
                        $admin_contact='Your Name Here <admin@youraddress.invalid>' ) {
   include buildbot::base
