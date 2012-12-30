@@ -6,7 +6,8 @@
 #
 # Copyright 2012 Jason Edgecombe, unless otherwise noted.
 #
-class buildbot::master( $user="buildmaster", $group="buildbot", $config, $project_dir ) {
+define buildbot::master::instance( $user="buildmaster", $group="buildbot",
+                                   $config, $project_dir ) {
   include buildbot::base
 
   buildbot::user_homedir { $user:
