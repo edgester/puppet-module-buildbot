@@ -26,8 +26,8 @@ Please log tickets and issues at our [Projects site](http://github.com/edgester/
 
 Example
 -------
-Here is an eample of how to use the module to set up a build master and
-two slaves on the same host.
+Here is an example of how to use the module to set up a build master and
+two slaves on the same host:
 
 buildbot::master::instance { 'my_master' :
   user        => 'buildmaster',
