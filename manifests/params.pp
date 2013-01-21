@@ -8,12 +8,12 @@
 #
 class buildbot::params {
 
-  case $::osfamily {
+  case $::operatingsystem {
     Debian: {
       $package_deps = [ 'adduser', 'build-essential', 'cvs', 'debhelper',
                         'dpkg', 'git-core', 'python', 'python-central',
-                        'python-dateutil', 'python-jinja2', 'python-simplejson',
-                        'python-migrate', 'python-pip',
+                        'python-dateutil', 'python-jinja2',
+                        'python-simplejson', 'python-pip',
                         'python-pysqlite2', 'python-twisted',
                         'python-twisted-core', 'python-twisted-mail',
                         'python-twisted-web', 'python-twisted-words',
@@ -23,6 +23,25 @@ class buildbot::params {
       # ensure may be 'installed', 'latest', or a specific version
       $pip_packages = {
         'sqlalchemy-migrate' => { 'ensure' => '0.7.1' },
+      }
+    }
+    Ubuntu: {
+      $package_deps = [ 'adduser', 'build-essential', 'cvs', 'debhelper',
+                        'dpkg', 'git-core', 'python', 'python-central',
+                        'python-dateutil', 'python-jinja2',
+                        'python-simplejson', 'python-pip',
+                        'python-pysqlite2', 'python-twisted',
+                        'python-twisted-core', 'python-twisted-mail',
+                        'python-twisted-web', 'python-twisted-words',
+                        'sqlite3', 'texinfo' ]
+
+      # list of packages to be installed via pip
+      # ensure may be 'installed', 'latest', or a specific version
+
+      $pip_packages = {
+        'decorator'          => { 'ensure' => 'installed' },
+        'SQLAlchemy'         => { 'ensure' => '0.7.9' },
+        'sqlalchemy-migrate' => { 'ensure' => 'latest' },
       }
     }
     default: {
