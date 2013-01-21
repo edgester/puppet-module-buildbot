@@ -23,6 +23,7 @@ class buildbot::params {
       # ensure may be 'installed', 'latest', or a specific version
       $pip_packages = {
         'sqlalchemy-migrate' => { 'ensure' => '0.7.1' },
+        'SQLAlchemy' => { 'ensure' => '0.7.9' },
       }
     }
     Ubuntu: {
