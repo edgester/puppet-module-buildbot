@@ -8,6 +8,6 @@ Architecture:  <%= @architecture           %>
 Hardware:      <%= @productname            %>
 OS:            <%= @operatingsystem %> <%= @operatingsystemrelease %>
 Kernel:        <%= @kernel %> <%= @kernelrelease %>
-Virtual:       <% if is_virtual == "true" -%>Yes (<%= @virtual %>)<% else -%>
+Virtual:       <% if @is_virtual == "true" -%>Yes (<%= @virtual %>)<% else -%>
 No
 <% end %>
